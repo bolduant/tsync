@@ -14,6 +14,15 @@ void print_md5_sum(unsigned char* md) {
 
 int main () {
 
+    f_block *block = initBlock();
+    addBlock(block);
+
+
+    block->data = "hui";
+    printf("%s\n",block->data);
+
+
+/*
     F_BLOCKLIST my_blocklist;
     my_blocklist.f_path = "/home/tbol/pictures/Wallpaper_Slackline.jpg";
 
@@ -21,48 +30,30 @@ int main () {
 
 
     FILE *fp = fopen(my_blocklist.f_path, "rb");
-    
+
     unsigned char buffer[BLOCKSIZE];
 
-    
+
     int i=0;
-    my_blocklist.f_blocks = (unsigned char**) malloc((i+1)*MD5_DIGEST_LENGTH);
 
     while ((fread(buffer,sizeof(unsigned char),BLOCKSIZE,fp)) > 0) {
 
-        
+
         unsigned char hash[MD5_DIGEST_LENGTH];
         MD5(buffer, sizeof(buffer), hash);
 
-        my_blocklist.f_blocks = (unsigned char**) realloc(my_blocklist.f_blocks, (i+1)*MD5_DIGEST_LENGTH);
-
-
         //my_blocklist.f_blocks[i] = hash;
-
-        
-        
-
-        print_md5_sum((my_blocklist).f_blocks[i]);
 
         //printf("Block [%d]: ", i);
         //print_md5_sum(hash);
         i++;
 
     }
-    
+
     printf("\n\n");
 
     fclose(fp);
-
-
-
-    for (int j=0; j<i; j++) {
-        print_md5_sum((my_blocklist).f_blocks[j]);
-    }
-
-
-
-
+*/
 
     //Idee: Erst initialisieren mit malloc und dann stetig mit realloc erweitern.
 
@@ -76,7 +67,7 @@ int main () {
                 "/home/tbol/pictures/"  =>  43 byte
                 8 * 142 blocks          =>  1136 byte
                 -------------------------------------
-                                            1179 byte 
+                                            1179 byte
                                             =========
 
                 1179 bytes metadata for 579.838 bytes
@@ -91,7 +82,7 @@ int main () {
 
 /*
 
-    * Solange nicht am Ende des eingelesenen Files, lade nächsten 4K Block & erzeuge MD5 Hash 
+    * Solange nicht am Ende des eingelesenen Files, lade nächsten 4K Block & erzeuge MD5 Hash
 
         +-------------------------------------------------------------------------------------------------------------------------------+                   +-------------------------------+
         |                                                         Data                                                                  |           ->      |            Hash               |
@@ -103,17 +94,17 @@ int main () {
 
 
     +-------------------------------+
-    |             Hash              |   
+    |             Hash              |
     +-------------------------------+
-    |             Hash              |   
+    |             Hash              |
     +-------------------------------+
 
                     +
 
     +-------------------------------+
-    |             Hash              |   
+    |             Hash              |
     +-------------------------------+
-                
+
 
 
 */
