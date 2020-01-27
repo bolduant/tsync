@@ -4,20 +4,27 @@
 
 #define BLOCKSIZE 4096
 
-
-typedef struct block{
-
-  const char *data;
-  block *next;
-
-} f_block;
-
-f_block *initBlock();
-f_block *addBlock(fblock *p_block);
-
 typedef struct {
+    char *path;
+    unsigned char **hashlist;
+} blocklist_t;
 
-    const char *f_path;
-    f_block *blocklist;
+/**
 
-} F_BLOCKLIST;
+                        F_BLOCKLIST
+    +-------------------------------------------------------+
+    |                                                       |
+    |    "/path/to/file"                                    |
+    |                                                       |
+    |    +---+----------+                                   |
+    |    | 1 |  <hash>  |                                   |
+    |    +---+----------+                                   |
+    |    | 2 |  <hash>  |                                   |
+    |    +---+----------+                                   |
+    |    |      ...     |                                   |
+    |    +---+----------+                                   |
+    |    | N |  <hash>  |                                   |
+    |    +---+----------+                                   |
+    |                                                       |
+    +-------------------------------------------------------*
+*/

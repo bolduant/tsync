@@ -14,97 +14,35 @@ void print_md5_sum(unsigned char* md) {
 
 int main () {
 
-    f_block *block = initBlock();
-    addBlock(block);
+    unsigned char **data = (unsigned char**) malloc(sizeof(unsigned char *)*2);
 
-
-    block->data = "hui";
-    printf("%s\n",block->data);
-
-
-/*
-    F_BLOCKLIST my_blocklist;
-    my_blocklist.f_path = "/home/tbol/pictures/Wallpaper_Slackline.jpg";
-
-    //printf("Pfad: %s\n", my_blocklist.f_path);
-
-
-    FILE *fp = fopen(my_blocklist.f_path, "rb");
-
-    unsigned char buffer[BLOCKSIZE];
-
-
-    int i=0;
-
-    while ((fread(buffer,sizeof(unsigned char),BLOCKSIZE,fp)) > 0) {
-
-
-        unsigned char hash[MD5_DIGEST_LENGTH];
-        MD5(buffer, sizeof(buffer), hash);
-
-        //my_blocklist.f_blocks[i] = hash;
-
-        //printf("Block [%d]: ", i);
-        //print_md5_sum(hash);
-        i++;
-
+    for (int i=0; i<2; i++) {
+        data[i] = (unsigned char*) malloc(sizeof(char [MD5_DIGEST_LENGTH]));
     }
 
-    printf("\n\n");
+    data[0][0] = 'z';
+    data[0][1] = 'C';
+    data[0][2] = 'i';
 
-    fclose(fp);
-*/
+    data[1][0] = 'h';
+    data[1][1] = 'u';
+    data[1][2] = 'i';
 
-    //Idee: Erst initialisieren mit malloc und dann stetig mit realloc erweitern.
 
 
-    //      each 4K block needs 8 byte for md5 checksum
-    //      size of file list:
-    //          <x> Number of Bytes for File_Path (MAX 1KB)
-    //        + <y> 8 * Number of 4k blocks
+    for (int j=0; j<2; j++) {
+        for (int i=0; i<MD5_DIGEST_LENGTH; i++) {
+            if (data[j][i] != 0) {
+                printf("%c", data[j][i]);
+            }
+        }
+        printf(":\t\t");
+        for (int i=0; i<MD5_DIGEST_LENGTH; i++) {
+            printf("%2X ", data[j][i]);
+        }
+        printf("\n");
+    }
 
-    /*      Example
-                "/home/tbol/pictures/"  =>  43 byte
-                8 * 142 blocks          =>  1136 byte
-                -------------------------------------
-                                            1179 byte
-                                            =========
-
-                1179 bytes metadata for 579.838 bytes
-    */
+    free(data);
 
 }
-
-
-
-
-
-
-/*
-
-    * Solange nicht am Ende des eingelesenen Files, lade nächsten 4K Block & erzeuge MD5 Hash
-
-        +-------------------------------------------------------------------------------------------------------------------------------+                   +-------------------------------+
-        |                                                         Data                                                                  |           ->      |            Hash               |
-        +-------------------------------------------------------------------------------------------------------------------------------+                   +-------------------------------+
-
-    * Erzeuge neuen Speicher für Hash-Wert des Blocks
-    * Schreibe Daten in den neuen Speicher des Blocks
-    * Vergrößere Array und füge Adresse des neuen Speicherblocks hinzu
-
-
-    +-------------------------------+
-    |             Hash              |
-    +-------------------------------+
-    |             Hash              |
-    +-------------------------------+
-
-                    +
-
-    +-------------------------------+
-    |             Hash              |
-    +-------------------------------+
-
-
-
-*/
